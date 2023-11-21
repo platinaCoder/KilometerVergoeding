@@ -1,1 +1,1 @@
-streamlit @ file:///croot/streamlit_1689179184772/work
+streamlit

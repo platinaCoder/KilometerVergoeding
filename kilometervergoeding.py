@@ -17,7 +17,7 @@ dag = st.selectbox(
     "Kies een dag:", ("Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag")
 )
 
-match st.selectbox("Kies een dag:", ("Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag")):
+match dag:
     case "Dinsdag":
         chaufeur = st.selectbox("Kies de chaufeur:", ("Chariesa", "Kevin"))
     case "Woensdag":

@@ -4,14 +4,25 @@ import streamlit as st
 
 chaufeur = ""
 vergoeding_per_km = 0.21
-# vergoeding_chariesa = 0
-# vergoeding_kevin = 0
-# vergoeding_jurre = 0
+conn = st.connection("vergoeding_db", type="sql")
 
+with conn.session as s:
+    s.execute(
+        "CREATE TABLE IF NOT EXISTS km_vergoeding (medewerker TEXT, kilometers TEXT, vergoeding TEXT);"
+    )
+    s.execute("DELETE FROM km_vergoeding;")
+    km_vergoeding = {"Chariesa": "0", "Kevin": "0", "Jurre": "0"}
+    for k in km_vergoeding:
+        s.execute(
+            "INSERT INTO km_vergoeding (medewerker, kilometers, vergoeding) VALUES (:medewerker, :kilometers, :vergoeding);",
+            params=dict(
+                medewerker=k, kilometers=km_vergoeding[k], vergoeding=km_vergoeding[k]
+            ),
+        )
+        s.commit()
 
-# st.write("Reiskostenvergoeding overzicht")
-# df = pd.DataFrame([["Chariesa", "Kevin", "Jurre"], ["0", "0", "0"]])
-# st.dataframe(df, hide_index=True)
+km_vergoeding = conn.query("select * from km_vergoeding")
+st.dataframe(km_vergoeding)
 
 dag = st.selectbox(
     "Kies een dag:", ("Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag")

@@ -3,12 +3,10 @@ import streamlit as st
 chaufeur = ""
 vergoeding_per_km = 0.21
 conn = st.connection("vergoeding_db", type="sql")
-
-
 km_vergoeding = conn.query("select * from km_vergoeding")
-st.dataframe(km_vergoeding, hide_index=True)
 
-if st.button("Reset Database!"):
+
+def reset_db():
     with conn.session as s:
         s.execute(
             "CREATE TABLE IF NOT EXISTS km_vergoeding (medewerker TEXT, kilometers REAL, vergoeding REAL);"
@@ -25,7 +23,6 @@ if st.button("Reset Database!"):
                 ),
             )
             s.commit()
-    st.rerun()
 
 
 def query_db(medewerker, km, kosten):
@@ -63,6 +60,12 @@ def query_db(medewerker, km, kosten):
         )
         s.commit()
 
+
+st.dataframe(km_vergoeding, hide_index=True)
+
+if st.button("Reset Database!"):
+    reset_db()
+    st.rerun()
 
 dag = st.selectbox(
     "Kies een dag:", ("Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag")

@@ -1,7 +1,5 @@
 import streamlit as st
 
-# import pandas as pd
-
 chaufeur = ""
 vergoeding_per_km = 0.21
 conn = st.connection("vergoeding_db", type="sql")
@@ -27,7 +25,7 @@ if st.button("Reset Database!"):
                 ),
             )
             s.commit()
-        st.rerun()
+    st.rerun()
 
 
 def query_db(medewerker, km, kosten):

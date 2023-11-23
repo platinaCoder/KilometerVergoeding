@@ -1,3 +1,2 @@
 streamlit
-sqlite
 SQLAlchemy==1.4

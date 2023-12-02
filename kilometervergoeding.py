@@ -41,8 +41,6 @@ def query_db(medewerker, km, kosten):
     print("vergoeding: ", kosten_to_float)
     print(value_sum_km, value_sum_vergoeding)
     print("\n")
-    st.dataframe(data_query, hide_index=True)
-    st.write(medewerker, km, kosten)
     with conn.session as s:
         s.execute(
             "UPDATE km_vergoeding SET kilometers = :kilometers WHERE medewerker = :medewerker",

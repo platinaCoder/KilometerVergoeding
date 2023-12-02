@@ -65,6 +65,7 @@ st.dataframe(km_vergoeding, hide_index=True)
 
 if st.button("Reset Database!"):
     reset_db()
+    st.cache_data.clear()
     st.rerun()
 
 dag = st.selectbox(
@@ -116,14 +117,22 @@ if chaufeur == "Kevin" and passagier == ["Chariesa"]:
         query_db(chaufeur, km, kosten)
         st.rerun()
     st.write(kosten)
-if chaufeur == "Kevin" and passagier == ["Jurre", "Chariesa"]:
+if (
+    chaufeur == "Kevin"
+    and passagier == ["Jurre", "Chariesa"]
+    or passagier == ["Chariesa", "Jurre"]
+):
     km = 82.10
     kosten = round(km * vergoeding_per_km, 2)
     if st.button(label="Submit"):
         query_db(chaufeur, km, kosten)
         st.rerun()
     st.write(kosten)
-if chaufeur == "Chariesa" and passagier == ["Jurre", "Kevin"]:
+if (
+    chaufeur == "Chariesa"
+    and passagier == ["Jurre", "Kevin"]
+    or passagier == ["Kevin", "Jurre"]
+):
     km = 85.80
     kosten = round(km * vergoeding_per_km, 2)
     if st.button(label="Submit"):
